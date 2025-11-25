@@ -66,7 +66,7 @@ WebClient webClient(SomeProperties properties) throws Exception {
 2025-11-20 07:15:47,628 INFO  com.example.demo :  WebClient initialized
 ```
 
-**first request ~2.8s**
+**first request ~2.2-2.8s average**
 
 ```java
 2025-11-20 07:16:40,266 TRACE com.example.demo : Calling Some service for signing and encryption ...
@@ -104,7 +104,7 @@ Server: <filtered>
 2025-11-20 07:16:42,135 DEBUG reactor.netty.resources.PooledConnectionProvider :  [6454b084, L:/30.30.30.30:3333 - R:some.host.example/40.40.40.40:4444] Channel cleaned, now: 0 active connections, 1 inactive connections and 0 pending acquire requests.
 ```
 
-**second request ~ 0.44s**
+**second request ~ 0.20.5s average**
 ```java
 2025-11-20 07:18:51,267 TRACE com.example.demo : Calling Some service for signing and encryption ...
 2025-11-20 07:18:51,294 DEBUG reactor.netty.resources.PooledConnectionProvider :  [32068e6f] Created a new pooled channel, now: 0 active connections, 0 inactive connections and 0 pending acquire requests.
