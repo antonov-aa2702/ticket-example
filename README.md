@@ -1,18 +1,18 @@
-Hey team. I am creating an application that needs to call another microservice,
-and add the minimum possible amount of latency doing so.
-So for that I wanted to give netty and the Spring webclient a try.
+Hello team. I'm building an application that needs to call another microservice,
+and at the same time realize the minimum possible delay.
+So I'm using netty and Spring web client.
 
-On the first try i saw that calling the first time the netty version was much slower than
-the simple curl based ones. 
-I added warmup functionality but it didn't help much.
-Is there anything else I can do to optimize the first call performance?
+On the first try I saw that the first call to the netty version was much slower than
+simple ones based on a curl. 
+I added warmup functionality, but it didn't help much.
+Is there anything else I can do to optimize first call performance?
 
 ## Expected Behavior
 The difference between the first and second request is not that big.
 
 ## Actual Behavior
 
-**Config**
+**web client configuration**
 ```java
 WebClient webClient(SomeProperties properties) throws Exception {
     log.info("Initializing WebClient Bean");
@@ -31,7 +31,7 @@ WebClient webClient(SomeProperties properties) throws Exception {
 }
 ```
 
-**Request**
+**sending a request**
 ```java
     public byte[] sendSomeRequest(String message, String user, String password) {
     log.trace("Calling Some service for signing and encryption. Message: {}", message);
@@ -56,7 +56,7 @@ WebClient webClient(SomeProperties properties) throws Exception {
 }
 ```
 
-**warmup**
+**warmup functionality**
 ```java
 2025-11-20 07:15:46,801 INFO  com.example.demo :  Initializing WebClient Bean
 2025-11-20 07:15:47,059 DEBUG reactor.netty.tcp.TcpResources :  [http] resources will use the default LoopResources: DefaultLoopResources {prefix=reactor-http, daemon=true, selectCount=40, workerCount=40}
@@ -66,7 +66,7 @@ WebClient webClient(SomeProperties properties) throws Exception {
 2025-11-20 07:15:47,628 INFO  com.example.demo :  WebClient initialized
 ```
 
-**first request ~2.2-2.8s average**
+**first request 2.2-2.8 seconds on average**
 
 ```java
 2025-11-20 07:16:40,266 TRACE com.example.demo : Calling Some service for signing and encryption ...
@@ -104,7 +104,7 @@ Server: <filtered>
 2025-11-20 07:16:42,135 DEBUG reactor.netty.resources.PooledConnectionProvider :  [6454b084, L:/30.30.30.30:3333 - R:some.host.example/40.40.40.40:4444] Channel cleaned, now: 0 active connections, 1 inactive connections and 0 pending acquire requests.
 ```
 
-**second request ~ 0.2-0.5s average**
+**first request 0.2-0.5 seconds on average**
 ```java
 2025-11-20 07:18:51,267 TRACE com.example.demo : Calling Some service for signing and encryption ...
 2025-11-20 07:18:51,294 DEBUG reactor.netty.resources.PooledConnectionProvider :  [32068e6f] Created a new pooled channel, now: 0 active connections, 0 inactive connections and 0 pending acquire requests.
@@ -140,12 +140,12 @@ Server: <filtered>
 2025-11-20 07:18:51,446 DEBUG reactor.netty.resources.PooledConnectionProvider :  [32068e6f, L:/30.30.30.30:42604 - R:some.host.example/40.40.40.40:4444] Channel cleaned, now: 0 active connections, 1 inactive connections and 0 pending acquire requests.
 ```
 
-**curl request**
+**sending a request using CURL**
 ```java
 curl -k -s -o /dev/null -w "namelookup:%{time_namelookup} connect:%{time_connect} appconnect:%{time_appconnect} starttransfer:%{time_starttransfer} total:%{time_total}\n" "https://some.host.example:443/someApi"
 ```
 
-**curl response**
+**received response**
 ```java
 namelookup:0.005330 connect:0.008379 appconnect:0.033125 starttransfer:0.065702 total:0.066037  
 ```
