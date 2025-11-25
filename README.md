@@ -66,7 +66,7 @@ WebClient webClient(SomeProperties properties) throws Exception {
 2025-11-20 07:15:47,628 INFO  com.example.demo :  WebClient initialized
 ```
 
-**first request 2.2-2.8 seconds on average**
+**second request 2.2-2.8 seconds on average**
 
 ```java
 2025-11-20 07:16:40,266 TRACE com.example.demo : Calling Some service for signing and encryption ...
