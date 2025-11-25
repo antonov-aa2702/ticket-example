@@ -1,6 +1,4 @@
-Hello team. I'm building an application that needs to call another microservice,
-and at the same time realize the minimum possible delay.
-So I'm using netty and Spring web client.
+Hello team. I'm building an application that needs to call another microservice and I want to ensure the lowest possible latency.
 
 On the first try I saw that the first call to the netty version was much slower than
 simple ones based on a curl. 
